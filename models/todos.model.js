@@ -9,10 +9,13 @@ module.exports = mongoose.model('Todo', new Schema ({
     starred: Boolean,
     status: Boolean,
     category:[String],
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    }
 },{
     timestamps: true
 }).pre('save', () => {
-    if(this.starred != true)
-        this.starred = false;
+    this.starred = false;
     this.status = false;
 }));

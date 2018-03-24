@@ -1,6 +1,27 @@
 const Todo = require('../models/todos.model');
+const sendingEmail = require('../helpers/sendEmail.helper');
 
 module.exports = {
+    findAllByUserId: (req,res) => {
+      Todo.find({
+        userId : req.params.user_id
+      })
+        .sort('status')
+        .sort('-starred')
+        .exec()
+        .then(data => {
+          return res.status(200).json({
+            message: `Succeed get all todo data for user: ${req.params.user_id}`,
+            data,
+          });
+        })
+        .catch(err => {
+          return res.status(400).json({
+            message: 'Failed get todo data for specific user',
+            err
+          })
+        })
+    },
     findAll: (req, res) => {
         Todo.find()
             .exec()
@@ -19,6 +40,7 @@ module.exports = {
     findById: (req, res) => {
         Todo.findOne({
             _id: req.params.id
+            // userId : req.params.user_id
         })
         .exec()
         .then(data => {
@@ -38,6 +60,9 @@ module.exports = {
             text: req.body.text,
             due_date: req.body.due_date,
             starred: req.body.starred,
+            userId: req.params.user_id,
+            starred: false,
+            status: false,
         },(err, data) => {
             console.log("masuk")
             if(err){
@@ -53,7 +78,8 @@ module.exports = {
 
     },
     update: (req, res) => {
-        Todo.findOneAndUpdate(
+      console.log(req.params.id);
+        Todo.findByIdAndUpdate(
             req.params.id,
             req.body,
             {
@@ -61,6 +87,7 @@ module.exports = {
             }
         )
         .then((data) => {
+          console.log(data)
             return res.status(200).json({
                 message: "Succeed to update todo data",
                 data
@@ -85,6 +112,23 @@ module.exports = {
             return res.status(400).json({
                 message: "Failed to delete data"
             })
+        })
+    },
+    sendEmail: (req, res) => {
+      Todo.find({
+        userId : req.params.user_id
+      })
+        .sort('status')
+        .sort('-starred')
+        .exec()
+        .then(data => {
+          sendingEmail();
+        })
+        .catch(err => {
+          return res.status(400).json({
+            message: 'Failed get todo data for specific user',
+            err
+          })
         })
     }
 }
