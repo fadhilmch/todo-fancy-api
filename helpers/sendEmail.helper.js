@@ -15,23 +15,24 @@ var parseData = function (data) {
         return (val.starred == false && val.status == false) 
     }).map(val => val.text)
 
-    var stringImportant = 'Important Task:\n'
-    var stringUndone = '\n Undone Task: \n'
-    var stringDone = '\n Done Task: \n'
+    var stringImportant = '<strong>Important Task:</strong><br>'
+    var stringUndone = '<br><strong>Undone Task:</strong><br>'
+    var stringDone = '<br><strong>Done Task:</strong><br>'
 
     importantTask.forEach(val => {
-        stringImportant += ('□ '+val+'\n')
+        stringImportant += ('□ '+val+'<br>')
     })
 
     undoneTask.forEach(val => {
-        stringUndone += ('□ '+val+'\n')
+        stringUndone += ('□ '+val+'<br>')
     })
 
     doneTask.forEach(val => {
-        stringDone += ('✔ '+val+'\n')
+        stringDone += ('✔ '+val+'<br>')
     })
 
-    return '#todo\n\nThis is your task list\n\n'+stringImportant + stringUndone + stringDone
+    return `<h1>#todo</h1>
+        <h3>This is your task list</h3>`+stringImportant + stringUndone + stringDone
 }
 
 // send mail with defined transport object
@@ -56,7 +57,7 @@ var parseData = function (data) {
         from: "#todo service ✔ <fadhilmch.sampah@gmail.com>", // sender address
         to: email, // list of receivers
         subject: "#todo: This is your todo list ✔", // Subject line
-        text: emailContent, // plaintext body
+        html: emailContent, // plaintext body
     }
 
   transporter.sendMail(mailOptions, function(error, response){
