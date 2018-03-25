@@ -6,6 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var cors = require('cors');
+var nodemailer = require('nodemailer');
+var xoauth2 = require('xoauth2');
 
 var index = require('./routes/index');
 var users = require('./routes/users');

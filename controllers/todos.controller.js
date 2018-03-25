@@ -122,7 +122,12 @@ module.exports = {
         .sort('-starred')
         .exec()
         .then(data => {
-          sendingEmail();
+            // console.log(data)
+            console.log(req.body.email)
+            sendingEmail(data, req.body.email);
+            return res.status(200).json({
+                message: 'Succeed to send email'
+            })
         })
         .catch(err => {
           return res.status(400).json({

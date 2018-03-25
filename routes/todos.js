@@ -3,15 +3,15 @@ const router = express.Router();
 const {findAll, findById, create, update, destroy, findAllByUserId, sendEmail} = require('../controllers/todos.controller');
 const {checkAuth} = require('../middleware/checkAuth');
 
-router.get('/',findAll);
-router.get('/user/:user_id', findAllByUserId);
-router.post('/user/:user_id', create);
-router.post('/user/:user_id/send_email', sendEmail);
-// router.post('/send_email',, sendEmail);
+router.get('/',checkAuth,findAll);
+router.get('/user/:user_id',checkAuth, findAllByUserId);
+router.post('/user/:user_id',checkAuth, create);
+router.post('/user/:user_id/send_email', checkAuth,sendEmail);
+// router.post('/send_email',checkAuth, sendEmail);
 
 
-router.get('/:id/', findById);
-router.put('/:id/', update);
-router.delete('/:id/', destroy);
+router.get('/:id/',checkAuth, findById);
+router.put('/:id/', checkAuth,update);
+router.delete('/:id/', checkAuth,destroy);
 
 module.exports = router;

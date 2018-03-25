@@ -21,7 +21,7 @@ module.exports = {
                 return res.status(200).json({
                   message: 'Succeed signed in with facebook',
                   _id : data._id,
-                  emai: data.email,
+                  email: data.email,
                   name: data.name,
                   token,
                 })
