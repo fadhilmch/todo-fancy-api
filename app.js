@@ -14,7 +14,7 @@ var users = require('./routes/users');
 var todos = require('./routes/todos');
 var app = express();
 
-const dbURL = 'mongodb://localhost:27017/todo-fancy';
+const dbURL = 'mongodb://fadhilmch:123456@ds125489.mlab.com:25489/todo';
 const db = mongoose.connection;
 
 // view engine setup
